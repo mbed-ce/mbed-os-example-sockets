@@ -1,33 +1,28 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-cmake_minimum_required(VERSION 3.19.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.19)
+cmake_policy(VERSION 3.19)
 
-set(MBED_PATH ${CMAKE_CURRENT_SOURCE_DIR}/mbed-os CACHE INTERNAL "")
-set(MBED_CONFIG_PATH ${CMAKE_CURRENT_BINARY_DIR} CACHE INTERNAL "")
-set(APP_TARGET mbed-os-example-sockets)
+# Initialize Mbed OS build system. 
+# Note: This block must be before the include of app.cmake
+set(MBED_APP_JSON_PATH mbed_app.json)
 
-include(${MBED_PATH}/tools/cmake/app.cmake)
+include(mbed-os/tools/cmake/app.cmake)
+add_subdirectory(mbed-os)
 
-project(${APP_TARGET})
+project(mbed-os-example-sockets)
 
-add_subdirectory(${MBED_PATH})
+add_executable(mbed-os-example-sockets
+    source/main.cpp)
+mbed_set_post_build(mbed-os-example-sockets)
 
-add_executable(${APP_TARGET})
-
-mbed_configure_app_target(${APP_TARGET})
-
-target_include_directories(${APP_TARGET}
+target_include_directories(mbed-os-example-sockets
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-target_sources(${APP_TARGET}
-    PRIVATE
-        source/main.cpp
-)
-
-target_link_libraries(${APP_TARGET}
+target_link_libraries(mbed-os-example-sockets
     PRIVATE
         mbed-os
         mbed-netsocket
@@ -35,16 +30,9 @@ target_link_libraries(${APP_TARGET}
 )
 
 if("ism43362" IN_LIST MBED_TARGET_LABELS)
-    add_subdirectory(COMPONENT_ism43362)
-    target_link_libraries(${APP_TARGET}
+    add_subdirectory(wifi-ism43362)
+    target_link_libraries(mbed-os-example-sockets
         PRIVATE
             wifi-ism43362
     )
-endif()
-
-mbed_set_post_build(${APP_TARGET})
-
-option(VERBOSE_BUILD "Have a verbose build process")
-if(VERBOSE_BUILD)
-    set(CMAKE_VERBOSE_MAKEFILE ON)
 endif()
