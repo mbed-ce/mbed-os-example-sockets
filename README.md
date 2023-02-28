@@ -79,58 +79,14 @@ documentation.
 
 ## Building and flashing the example
 
-### Mbed OS build tools
+1. Clone it to your machine.  Don't forget to use `--recursive` to clone the submodules: `git clone --recursive https://github.com/mbed-ce/mbed-os-example-sockets`
+2. Set up the GNU ARM toolchain (and other programs) on your machine using [the toolchain setup guide](https://github.com/mbed-ce/mbed-os/wiki/Toolchain-Setup-Guide).
+3. Set up the CMake project for editing.  We have three ways to do this:
+    - On the [command line](https://github.com/mbed-ce/mbed-os/wiki/Project-Setup:-Command-Line)
+    - Using the [CLion IDE](https://github.com/mbed-ce/mbed-os/wiki/Project-Setup:-CLion)
+    - Using the [VS Code IDE](https://github.com/mbed-ce/mbed-os/wiki/Project-Setup:-VS-Code)
+4. If your Mbed target has upload method support, you can build the `flash-mbed-os-example-sockets` target to automatically upload the code to a connected device.  Otherwise, build the `mbed-os-example-sockets` target and manually load the resultant bin or hex file to your target.
 
-#### Mbed CLI 2
-
-Starting with version 6.5, Mbed OS uses Mbed CLI 2. It uses Ninja as a build system, and CMake to generate the build environment and manage the build process in a compiler-independent manner. If you are working with Mbed OS version prior to 6.5 then check the section [Mbed CLI 1](#mbed-cli-1).
-1. [Install Mbed CLI 2](https://os.mbed.com/docs/mbed-os/latest/build-tools/install-or-upgrade.html).
-1. From the command-line, import the example: `mbed-tools import mbed-os-example-sockets`
-1. Change the current directory to where the project was imported.
-
-#### Mbed CLI 1
-1. [Install Mbed CLI 1](https://os.mbed.com/docs/mbed-os/latest/quick-start/offline-with-mbed-cli.html).
-1. From the command-line, import the example: `mbed import mbed-os-example-sockets`
-1. Change the current directory to where the project was imported.
-
-### To build the example
-
-1. Connect a USB cable between the USB port on the board and the host computer.
-1. Run the following command to build the example project and program the microcontroller flash memory:
-
-    * Mbed CLI 2
-
-    ```bash
-    $ mbed-tools compile -m <TARGET> -t <TOOLCHAIN> --flash --sterm
-    ```
-
-    * Mbed CLI 1
-
-    ```bash
-    $ mbed compile -m <TARGET> -t <TOOLCHAIN> --flash --sterm
-    ```
-
-Your PC may take a few minutes to compile your code.
-
-The binary is located at:
-* **Mbed CLI 2** - `./cmake_build/<TARGET>/<PROFILE>/<TOOLCHAIN>/mbed-os-example-sockets.bin`</br>
-* **Mbed CLI 1** - `./BUILD/<TARGET>/<TOOLCHAIN>/mbed-os-example-sockets.bin`
-
-Alternatively, you can manually copy the binary to the board, which you mount on the host computer over USB.
-
-You can also open a serial terminal separately, rather than using the `--sterm` option, with the following command:
-
-* Mbed CLI 2
-
-```bash
-$ mbed-tools sterm
-```
-
-* Mbed CLI 1
-
-```bash
-$ mbed sterm
-```
 
 ### Expected output
 

@@ -30,6 +30,9 @@ target_link_libraries(mbed-os-example-sockets
 )
 
 if("ism43362" IN_LIST MBED_TARGET_LABELS)
+    # Note: The ism43362 library's CMake code provides an interface target, so its
+    # code will get recompiled for every library that links to it.  Might want to change
+    # it to a static library at some point...
     add_subdirectory(wifi-ism43362)
     target_link_libraries(mbed-os-example-sockets
         PRIVATE
