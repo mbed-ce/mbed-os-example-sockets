@@ -1,5 +1,7 @@
 [submodule "mbed-os"]
 	shallow = true
+	url = https://github.com/mbed-ce/mbed-os.git
+	path = mbed-os
 [submodule "wifi-ism43362"]
 	path = wifi-ism43362
 	url = https://github.com/ARMmbed/wifi-ism43362.git
